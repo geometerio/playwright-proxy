@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# : ${SELF:?'UNDEFINED - Be sure to `direnv allow` first'}
-
-# pushd ${SELF}/img > /dev/null
-#   docker build . --tag ${DOCKER_TAG}
-# popd > /dev/null
+: ${SELF:?'UNDEFINED - Be sure to `direnv allow` first'}
 
 git add ${SELF}
-git duet-commit $@
+git duet-commit "$@"
