@@ -2,6 +2,8 @@ import dotenv  from "dotenv";
 import express from "express";
 import path    from "path";
 
+import * as routes from "./routes";
+
 dotenv.config({
   path: "./local/envrc"
 });
@@ -12,9 +14,7 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
+routes.register(app);
 
 // start the Express server
 app.listen(port, () => {
