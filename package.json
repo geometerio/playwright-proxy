@@ -4,20 +4,33 @@
   "description": "",
   "main": "pkg/index.js",
   "scripts": {
-    "prebuild": "tslint -c etc/tslint.json -p etc/tsconfig.json --fix",
-    "build": "tsc -p etc/tsconfig.json",
-    "prestart": "npm run build",
+    "clean": "rimraf pkg/*",
+    "lint": "tslint -c etc/tslint.json -p etc/tsconfig.json --fix",
+    "assets": "ts-node bin/tools/assets",
+    "compile": "tsc -p etc/tsconfig.json",
+    "build": "npm-run-all clean lint compile assets",
+    "dev:serve": "npm-run-all build start",
+    "dev:watch": "nodemon --watch src -e ts,ejs --exec npm run dev:serve",
     "start": "node ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.17.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.11",
+    "@types/fs-extra": "^9.0.11",
     "@types/node": "^14.14.41",
+    "@types/shelljs": "^0.8.8",
+    "fs-extra": "^9.1.0",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "shelljs": "^0.8.4",
+    "ts-node": "^9.1.1",
     "tslint": "^6.1.3",
     "typescript": "^4.2.4"
   }

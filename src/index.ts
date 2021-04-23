@@ -1,11 +1,14 @@
 import express from "express";
+import path    from "path";
+
 const app = express();
-// default port to listen on
 const port = 8080;
 
-// define a route handler for the default home page
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
 app.get("/", (req, res) => {
-  res.send("Hello world!");
+  res.render("index");
 });
 
 // start the Express server
