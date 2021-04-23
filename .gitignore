@@ -1,0 +1,6 @@
+.local
+.vscode
+
+/tmp
+
+node_modules
