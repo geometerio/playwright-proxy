@@ -1,6 +1,7 @@
 .local
 .vscode
 
+/pkg
 /tmp
 
 node_modules
