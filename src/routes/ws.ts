@@ -5,7 +5,7 @@ import { createProxy } from "http-proxy";
 export const register = (app: express.Application) => {
   // NOTE:
   //
-  // Each websocket request to `/xyz` spins up its own new playwright
+  // Each websocket request to `/chromium` spins up its own new playwright
   // BrowserServer. This might actually be desired, in the interest of test
   // isolation. Or, perhaps we want to maintain a pool for the sake of speed
   // and resource constraints.
