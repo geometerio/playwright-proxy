@@ -3,6 +3,12 @@ set -euo pipefail
 
 : ${SELF:?'UNDEFINED - Be sure to `direnv allow` first'}
 
-pushd ${SELF} > /dev/null
-  npm run dev:serve
-popd > /dev/null
+# pushd ${SELF} > /dev/null
+#   npm run dev:serve
+# popd > /dev/null
+
+docker run --rm --ipc=host \
+  -p ${WEBSERVER_PORT}:${WEBSERVER_PORT} \
+  -p ${WEBSOCKET_PORT}:${WEBSOCKET_PORT} \
+  -d \
+  ${DOCKER_TAG}
