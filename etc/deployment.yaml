@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: geometer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: geo-playwright
+  namespace: geometer
+spec:
+  selector:
+    app: geo-playwright
+  ports:
+  - name: "geo-playwright-8080"
+    protocol: TCP
+    port: 8080
+  - name: "geo-playwright-8081"
+    protocol: TCP
+    port: 8081
+  type: LoadBalancer # You may want to replace LoadBalancer with Ingress: just comment this line and uncomment Ingress definition below
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: geo-playwright
+  namespace: geometer
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: geo-playwright
+  template:
+    metadata:
+      labels:
+        app: geo-playwright
+    spec:
+      containers:
+      - name: geo-playwright
+        image: geometerio/geo-playwright:dev
+        imagePullPolicy: Never # for local dev
+        resources: {}
+        ports:
+        - containerPort: 8080
+        - containerPort: 8081
