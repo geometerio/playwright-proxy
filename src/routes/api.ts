@@ -33,11 +33,6 @@ export const register = (app: express.Application) => {
   app.get("/api/server", async (req: any, res) => {
     try {
       (async () => {
-        // const options = {
-        //   headless: false,
-        //   slowMo: 10000
-        // };
-        // const browser = await playwright.chromium.launch(options);
         const server   = await playwright.chromium.launchServer();
         const wsEndpoint = server.wsEndpoint();
 
@@ -49,36 +44,7 @@ export const register = (app: express.Application) => {
         await new Promise(resolve => setTimeout(resolve, 2000)); // wait 2s, for effect.
 
         // tslint:disable-next-line:no-console
-        console.info("and now...");
-
-        // sometime later, use that ws server to drive a test...
-        const browser = await playwright.chromium.connect({ wsEndpoint });
-        const page    = await browser.newPage();
-        let domain  = "yahoo.com";
-
-        await page.goto(`https://${domain}`);
-        await page.screenshot({
-          path: `doc/${domain}.png`
-        });
-
-        // tslint:disable-next-line:no-console
-        console.info(`...take a look at 'doc/${domain}.png' (and note that things are still running)`);
-
-        await new Promise(resolve => setTimeout(resolve, 2000)); // wait 2s, for effect.
-        // tslint:disable-next-line:no-console
-        console.info("let's do that again...");
-        await new Promise(resolve => setTimeout(resolve, 2000)); // wait 2s, for effect.
-        domain  = "ebay.com";
-
-        await page.goto(`https://${domain}`);
-        await page.screenshot({
-          path: `doc/${domain}.png`
-        });
-
-        // tslint:disable-next-line:no-console
-        console.info(`...take a look at 'doc/${domain}.png' (and note that things are still running)`);
-
-        await browser.close();
+        console.info("update `basic.spec.ts` in the `geo-player` project with that WS endpoint and `npm run spec`");
       })();
 
       // res.setHeader('Content-Type', 'application/json');
