@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+: ${SELF:?'UNDEFINED - Be sure to `direnv allow` first'}
+
+pushd ${SELF} > /dev/null
+  npm run dev:serve
+popd > /dev/null

@@ -17,6 +17,8 @@ export const register = (app: express.Application) => {
 
       res.setHeader('Content-Type', 'application/json');
       res.json({ endpoint });
+
+      // server.close();
     } catch (error) {
       // ...
     }
