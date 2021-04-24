@@ -8,7 +8,8 @@ dotenv.config({
   path: "./local/envrc"
 });
 
-const port = process.env.SERVER_PORT;
+const port = process.env.WEBSERVER_PORT || '8080';
+const port2 = process.env.WEBSOCKET_PORT || '8081';
 const app = express();
 
 app.set("views", path.join(__dirname, "views"));
@@ -25,8 +26,9 @@ const server = http.createServer(app);
 const proxy  = createProxy({
   target: {
     host: 'localhost',
-    port: 8082
+    port: port2
   },
+  toProxy: true,
   ws: true
 });
 
@@ -40,6 +42,6 @@ server.listen(port, () => {
 });
 
 const server2 = http.createServer(app);
-server2.listen(8082, () => {
-  console.log(`server started at http://localhost:8082`);
+server2.listen(port2, () => {
+  console.log(`server started at http://localhost:${port2}`);
 });
