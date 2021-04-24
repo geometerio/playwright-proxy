@@ -16,18 +16,30 @@ app.set("view engine", "ejs");
 
 routes.register(app);
 
-// // start the Express server
-// app.listen(port, () => {
-//   // tslint:disable-next-line:no-console
-//   console.log(`server started at http://localhost:${port}`);
-// });
+// ---
 
-import * as http from "http";
-// import * as proxy from "http-proxy";
+import * as http        from "http";
+import { createProxy }  from "http-proxy";
 
 const server = http.createServer(app);
-// const ws     = proxy.createProxyServer({ ws: true });
+const proxy  = createProxy({
+  target: {
+    host: 'localhost',
+    port: 8082
+  },
+  ws: true
+});
+
+server.on('upgrade', (req: any, socket: any, head: any) => {
+  console.log(`ws upgrade for '${ req.url }'`);
+  proxy.ws(req, socket, head);
+});
 
 server.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
+});
+
+const server2 = http.createServer(app);
+server2.listen(8082, () => {
+  console.log(`server started at http://localhost:8082`);
 });
