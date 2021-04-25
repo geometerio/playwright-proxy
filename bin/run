@@ -3,12 +3,15 @@ set -euo pipefail
 
 : ${SELF:?'UNDEFINED - Be sure to `direnv allow` first'}
 
-# pushd ${SELF} > /dev/null
-#   npm run dev:serve
-# popd > /dev/null
+# development...
+pushd ${SELF} > /dev/null
+  npm run dev:serve
+popd > /dev/null
 
-docker run --rm --ipc=host \
-  -p ${WEBSERVER_PORT}:${WEBSERVER_PORT} \
-  -p ${WEBSOCKET_PORT}:${WEBSOCKET_PORT} \
-  -d \
-  ${DOCKER_TAG}
+# No longer need the following, since you can deploy it to K8s :)
+# "production"...
+# docker run --rm --ipc=host \
+#   -p ${WEBSERVER_PORT}:${WEBSERVER_PORT} \
+#   -p ${WEBSOCKET_PORT}:${WEBSOCKET_PORT} \
+#   -d \
+#   ${DOCKER_TAG}
