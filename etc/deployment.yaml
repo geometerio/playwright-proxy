@@ -20,7 +20,7 @@ spec:
   - name: "geo-playwright-8081"
     protocol: TCP
     port: 8081
-  type: LoadBalancer # You may want to replace LoadBalancer with Ingress: just comment this line and uncomment Ingress definition below
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
