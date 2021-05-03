@@ -1,4 +1,5 @@
 import * as express    from "express";
+import * as http       from "http";
 import * as playwright from "playwright";
 import { createProxy } from "http-proxy";
 
@@ -10,7 +11,13 @@ export const register = (app: express.Application) => {
   // isolation. Or, perhaps we want to maintain a pool for the sake of speed
   // and resource constraints.
   app.get("/chromium", async (req: any, res) => {
-    const server = await playwright.chromium.launchServer();
+    console.info(req.xhr);
+    const server = await playwright.chromium.launchServer({
+      args: [
+        '--use-fake-device-for-media-stream',
+        '--use-fake-ui-for-media-stream'
+      ]
+    });
     console.info(`proxying '/chromium' to '${server.wsEndpoint()}'`)
 
     const proxy = createProxy({
