@@ -1,15 +1,13 @@
-import dotenv  from "dotenv";
+import dotenv from "dotenv";
 import express from "express";
-import path    from "path";
+import path from "path";
 
 import * as routes from "./routes";
 
-dotenv.config({
-  path: "./local/envrc"
-});
+dotenv.config({path: "./local/envrc"});
 
 const port = process.env.WEBSERVER_PORT || '8080';
-const port2 = process.env.WEBSOCKET_PORT || '8081';
+const port2 = process.env.WEBSOCKET_PORT || '3000';
 const app = express();
 
 app.set("views", path.join(__dirname, "views"));
@@ -19,11 +17,11 @@ routes.register(app);
 
 // ---
 
-import * as http        from "http";
-import { createProxy }  from "http-proxy";
+import * as http from "http";
+import {createProxy} from "http-proxy";
 
 const server = http.createServer(app);
-const proxy  = createProxy({
+const proxy = createProxy({
   target: {
     host: 'localhost',
     port: port2
@@ -32,8 +30,10 @@ const proxy  = createProxy({
   ws: true
 });
 
-server.on('upgrade', (req: any, socket: any, head: any) => {
-  console.log(`ws upgrade for '${ req.url }'`);
+server.on('upgrade', (req : any, socket : any, head : any) => {
+  console.log(`ws upgrade for '${
+    req.url
+  }'`);
   proxy.ws(req, socket, head);
 });
 

@@ -17,9 +17,9 @@ spec:
   - name: "geo-playwright-8080"
     protocol: TCP
     port: 8080
-  - name: "geo-playwright-8081"
+  - name: "geo-playwright-3000"
     protocol: TCP
-    port: 8081
+    port: 3000
   type: LoadBalancer
 
 ---
@@ -45,4 +45,4 @@ spec:
         resources: {}
         ports:
         - containerPort: 8080
-        - containerPort: 8081
+        - containerPort: 3000
