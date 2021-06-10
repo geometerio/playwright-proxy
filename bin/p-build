@@ -4,7 +4,6 @@ set -euo pipefail
 : ${PROJECT:?'UNDEFINED - Be sure to `direnv allow` first'}
 
 pushd ${PROJECT} > /dev/null
-  eval $(minikube docker-env)
   npm run build
   docker build . --tag ${DOCKER_TAG}
 popd > /dev/null
