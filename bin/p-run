@@ -4,14 +4,18 @@ set -euo pipefail
 : ${PROJECT:?'UNDEFINED - Be sure to `direnv allow` first'}
 
 # development...
-pushd ${PROJECT} > /dev/null
-  npm run dev:serve
-popd > /dev/null
+# pushd ${PROJECT} > /dev/null
+#   npm run dev:serve
+# popd > /dev/null
 
 # No longer need the following, since you can deploy it to K8s :)
 # "production"...
-# docker run --rm --ipc=host \
-#   -p ${WEBSERVER_PORT}:${WEBSERVER_PORT} \
-#   -p ${WEBSOCKET_PORT}:${WEBSOCKET_PORT} \
-#   -d \
-#   ${DOCKER_TAG}
+docker run --rm --ipc=host \
+  --network playwright \
+  --network-alias playwright-server \
+  -e WEBSERVER_PORT \
+  -e WEBSOCKET_PORT \
+  -p ${WEBSERVER_PORT}:${WEBSERVER_PORT} \
+  -p ${WEBSOCKET_PORT}:${WEBSOCKET_PORT} \
+  -d \
+  ${DOCKER_TAG}
